@@ -6,6 +6,17 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: app
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -21,4 +32,17 @@ jobs:
       - name: Type check
         run: poetry run mypy app
       - name: Test
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: app
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          SECRET_KEY: devsecret
+          ALGORITHM: HS256
+          ACCESS_TOKEN_EXPIRE_MINUTES: "30"
+          AWS_REGION: us-east-1
+          S3_BUCKET: test-bucket
+          AWS_ACCESS_KEY_ID: dummy
+          AWS_SECRET_ACCESS_KEY: dummy
         run: poetry run pytest -q
