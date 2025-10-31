@@ -22,3 +22,5 @@ ruff_cache/
 .idea/
 .DS_Store
 Thumbs.db
+# VS Code history
+.history/
