@@ -16,7 +16,9 @@ def register(payload: RegisterIn, db: Session = Depends(get_db)):
     if db.query(User).filter(User.login == payload.login).first():
         raise HTTPException(status_code=400, detail="login already exists")
     user = User(login=payload.login, password_hash=hash_password(payload.password))
-    db.add(user); db.commit(); db.refresh(user)
+    db.add(user)
+    db.commit()
+    db.refresh(user)
     return user
 
 @router.post("/login", response_model=TokenOut)
