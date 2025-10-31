@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "final-project"
+version = "0.1.0"
+description = ""
+authors = ["efeboyacim <efe.byci@gmail.com>"]
+packages = [{ include = "app" }]
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+fastapi = "^0.120.3"
+uvicorn = {version = "^0.38.0", extras = ["standard"]}
+sqlalchemy = "^2.0.44"
+pydantic-settings = "^2.11.0"
+python-jose = "^3.5.0"
+passlib = {version = "^1.7.4", extras = ["bcrypt"]}
+psycopg2-binary = "^2.9.11"
+python-dotenv = "^1.2.1"
+bcrypt = "4.0.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+pytest-cov = "^7.0.0"
+httpx = "^0.28.1"
+ruff = "^0.14.3"
+mypy = "^1.18.2"
+
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+select = ["E", "F", "I"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+
