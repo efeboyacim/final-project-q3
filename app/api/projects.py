@@ -288,16 +288,22 @@ def list_access(project: Project = Depends(require_owner), db: Session = Depends
         .filter(ProjectAccess.project_id == project.id)
         .all()
     )
+
     owner_user = db.query(UserModel).filter(UserModel.id == project.owner_id).first()
+    if owner_user is None:
+        raise HTTPException(status_code=404, detail="owner not found")
+
     result = [AccessOut(user_id=owner_user.id, login=owner_user.login, can_access=True)]
     result += [AccessOut(user_id=u.id, login=u.login, can_access=pa.can_access) for pa, u in rows]
     return result
 
 
+
+
 @router.post("/{project_id}/access", status_code=status.HTTP_204_NO_CONTENT)
 def grant_or_update_access(
+    payload: AccessGrantIn,
     project: Project = Depends(require_owner),
-    payload: AccessGrantIn = ...,
     db: Session = Depends(get_db),
 ):
     target = db.query(UserModel).filter(UserModel.login == payload.login).first()
@@ -318,10 +324,11 @@ def grant_or_update_access(
     db.commit()
 
 
+
 @router.delete("/{project_id}/access/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 def revoke_access(
+    user_id: int,
     project: Project = Depends(require_owner),
-    user_id: int = ...,
     db: Session = Depends(get_db),
 ):
     pa = (

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class RegisterIn(BaseModel):
@@ -18,8 +18,7 @@ class UserOut(BaseModel):
     id: int
     login: str
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class LoginIn(BaseModel):
