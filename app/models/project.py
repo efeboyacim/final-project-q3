@@ -11,7 +11,11 @@ class Project(Base):
     description: Mapped[str | None] = mapped_column(Text)
 
 
-    owner_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    owner_id: Mapped[int] = mapped_column(
+    ForeignKey("users.id", ondelete="CASCADE"),
+    nullable=False,
+    )
+
 
     owner = relationship("User")
     accesses = relationship("ProjectAccess", cascade="all, delete-orphan", back_populates="project")
@@ -23,8 +27,17 @@ class Project(Base):
 class ProjectAccess(Base):
     __tablename__ = "project_accesses"
     id: Mapped[int] = mapped_column(primary_key=True)
-    project_id: Mapped[int] = mapped_column(ForeignKey("projects.id", ondelete="CASCADE"), index=True, nullable=False)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True, nullable=False)
+    project_id: Mapped[int] = mapped_column(
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        index=True,
+        nullable=False,
+    )
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"),
+        index=True,
+        nullable=False,
+    )
+
 
     can_access: Mapped[bool] = mapped_column(default=True, nullable=False)
 

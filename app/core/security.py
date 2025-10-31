@@ -15,7 +15,9 @@ def verify_password(p: str, hashed: str) -> bool:
     return pwd_ctx.verify(p, hashed)
 
 def create_access_token(sub: str, expires_minutes: int | None = None) -> str:
-    expire = datetime.now(timezone.utc) + timedelta(minutes=expires_minutes or int(settings.access_token_expire_minutes))
+    minutes = expires_minutes or int(settings.access_token_expire_minutes)
+    expire = datetime.now(timezone.utc) + timedelta(minutes=minutes)
+
     to_encode = {"sub": sub, "exp": expire}
     return jwt.encode(to_encode, settings.secret_key, algorithm=settings.algorithm)
 

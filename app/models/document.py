@@ -8,7 +8,12 @@ from app.core.db import Base
 class Document(Base):
     __tablename__ = "documents"
     id: Mapped[int] = mapped_column(primary_key=True)
-    project_id: Mapped[int] = mapped_column(ForeignKey("projects.id", ondelete="CASCADE"), index=True, nullable=False)
+    project_id: Mapped[int] = mapped_column(
+        ForeignKey("projects.id", ondelete="CASCADE"),
+        index=True,
+        nullable=False,
+    )
+
     name: Mapped[str] = mapped_column(String(255), nullable=False)  # sadece dosya adı
 
     project = relationship("Project", back_populates="documents")
