@@ -1,0 +1,24 @@
+# Gizli dosyalar
+.env
+
+# Sanal ortam ve geçici dosyalar
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+build/
+dist/
+
+# Test ve analiz
+.coverage
+pytest_cache/
+.mypy_cache/
+ruff_cache/
+
+# IDE / sistem dosyaları
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
