@@ -1,0 +1,13 @@
+# gizli ve gereksizler
+.env
+.venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+pytest_cache/
+.mypy_cache/
+ruff_cache/
+.DS_Store
+.vscode/
+.history/
