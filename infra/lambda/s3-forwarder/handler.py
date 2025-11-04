@@ -1,4 +1,8 @@
-import os, json, urllib.parse, urllib3
+import json
+import os
+import urllib.parse
+
+import urllib3
 
 API_URL = os.environ["API_URL"]  # https://<domain>/internal/s3-callback
 TOKEN   = os.environ["SHARED_SECRET"]

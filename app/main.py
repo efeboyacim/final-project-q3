@@ -1,10 +1,10 @@
+import os
+
 from fastapi import FastAPI
 from sqlalchemy import text
 
-from app.api import auth, projects
+from app.api import auth, internal, projects
 from app.core.db import Base, engine
-from app.api import internal
-import os
 
 app = FastAPI(title="Final Project API")
 Base.metadata.create_all(bind=engine)
