@@ -1,6 +1,5 @@
 from sqlalchemy import ForeignKey, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 from app.core.db import Base
 
 
@@ -21,6 +20,7 @@ class Project(Base):
     accesses = relationship("ProjectAccess", cascade="all, delete-orphan", back_populates="project")
 
     documents = relationship("Document", cascade="all, delete-orphan", back_populates="project")
+
 
 
 

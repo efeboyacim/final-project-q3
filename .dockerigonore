@@ -1,4 +1,4 @@
-# gizli ve gereksizler
+
 .env
 .venv/
 __pycache__/

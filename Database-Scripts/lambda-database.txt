@@ -1,0 +1,14 @@
+ALTER TABLE projects
+  ADD COLUMN IF NOT EXISTS byte_limit BIGINT NULL,
+  ADD COLUMN IF NOT EXISTS bytes_used BIGINT NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS file_count INTEGER NOT NULL DEFAULT 0;
+
+CREATE TABLE IF NOT EXISTS object_usages (
+  s3_key     TEXT PRIMARY KEY,                -- project-docs/{pid}/{filename}
+  project_id BIGINT NOT NULL,
+  name       TEXT NOT NULL,
+  size_bytes BIGINT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS object_usages_project_idx ON object_usages(project_id);

@@ -1,0 +1,42 @@
+-- Table: public.project_accesses
+
+-- DROP TABLE IF EXISTS public.project_accesses;
+
+CREATE TABLE IF NOT EXISTS public.project_accesses
+(
+    id integer NOT NULL DEFAULT nextval('project_accesses_id_seq'::regclass),
+    project_id integer NOT NULL,
+    user_id integer NOT NULL,
+    can_access boolean NOT NULL,
+    CONSTRAINT project_accesses_pkey PRIMARY KEY (id),
+    CONSTRAINT uq_project_user UNIQUE (project_id, user_id),
+    CONSTRAINT project_accesses_project_id_fkey FOREIGN KEY (project_id)
+        REFERENCES public.projects (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT project_accesses_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.project_accesses
+    OWNER to postgres;
+-- Index: ix_project_accesses_project_id
+
+-- DROP INDEX IF EXISTS public.ix_project_accesses_project_id;
+
+CREATE INDEX IF NOT EXISTS ix_project_accesses_project_id
+    ON public.project_accesses USING btree
+    (project_id ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: ix_project_accesses_user_id
+
+-- DROP INDEX IF EXISTS public.ix_project_accesses_user_id;
+
+CREATE INDEX IF NOT EXISTS ix_project_accesses_user_id
+    ON public.project_accesses USING btree
+    (user_id ASC NULLS LAST)
+    TABLESPACE pg_default;

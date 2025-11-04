@@ -1,0 +1,32 @@
+-- Table: public.users
+
+-- DROP TABLE IF EXISTS public.users;
+
+CREATE TABLE IF NOT EXISTS public.users
+(
+    id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+    login character varying(150) COLLATE pg_catalog."default" NOT NULL,
+    password_hash character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT users_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.users
+    OWNER to postgres;
+-- Index: ix_users_id
+
+-- DROP INDEX IF EXISTS public.ix_users_id;
+
+CREATE INDEX IF NOT EXISTS ix_users_id
+    ON public.users USING btree
+    (id ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: ix_users_login
+
+-- DROP INDEX IF EXISTS public.ix_users_login;
+
+CREATE UNIQUE INDEX IF NOT EXISTS ix_users_login
+    ON public.users USING btree
+    (login COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;

@@ -1,0 +1,29 @@
+-- Table: public.documents
+
+-- DROP TABLE IF EXISTS public.documents;
+
+CREATE TABLE IF NOT EXISTS public.documents
+(
+    id integer NOT NULL DEFAULT nextval('documents_id_seq'::regclass),
+    project_id integer NOT NULL,
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT documents_pkey PRIMARY KEY (id),
+    CONSTRAINT uq_project_docname UNIQUE (project_id, name),
+    CONSTRAINT documents_project_id_fkey FOREIGN KEY (project_id)
+        REFERENCES public.projects (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.documents
+    OWNER to postgres;
+-- Index: ix_documents_project_id
+
+-- DROP INDEX IF EXISTS public.ix_documents_project_id;
+
+CREATE INDEX IF NOT EXISTS ix_documents_project_id
+    ON public.documents USING btree
+    (project_id ASC NULLS LAST)
+    TABLESPACE pg_default;
