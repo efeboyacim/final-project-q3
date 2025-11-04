@@ -9,7 +9,7 @@ from app.core.db import Base, engine
 app = FastAPI(title="Final Project API")
 Base.metadata.create_all(bind=engine)
 
-script_path = "Database-Scripts/lamda-database.txt"
+script_path = "Database-Scripts/lambda-database.txt"
 if os.path.exists(script_path):
     with open(script_path, "r", encoding="utf-8") as f:
         sql = f.read().strip()
